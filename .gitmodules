@@ -7,5 +7,5 @@
 	url = https://github.com/vrpn/jsoncpp.git
 [submodule "antilatency_integration/AntilatencySDK"]
 	path = antilatency_integration/AntilatencySDK
-	url = https://github.com/AntilatencySDK/Release_4.2.1
+	url = https://github.com/AntilatencySDK/Release_4.2.1/tree/728e2352fae98073bf21c8350f72cda4516e2fff
 	branch = 728e2352fae98073bf21c8350f72cda4516e2fff
