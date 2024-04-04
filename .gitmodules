@@ -5,3 +5,7 @@
 [submodule "submodules/jsoncpp"]
 	path = submodules/jsoncpp
 	url = https://github.com/vrpn/jsoncpp.git
+[submodule "antilatency_integration/AntilatencySDK"]
+	path = antilatency_integration/AntilatencySDK
+	url = https://github.com/AntilatencySDK/Release_4.2.1
+	branch = subset-c90cef23ee0c9805d80ae70cf97d8a089b5a2a56
