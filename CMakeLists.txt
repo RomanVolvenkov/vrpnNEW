@@ -1125,6 +1125,7 @@ set(VRPN_SERVER_SOURCES
 	vrpn_Spaceball.C
 	vrpn_Streaming_Arduino.C
 	vrpn_Tng3.C
+	#vrpn_Tracker_Alt.C
 	vrpn_Tracker_3DMouse.C
 	vrpn_Tracker_AnalogFly.C
 	vrpn_Tracker_ButtonFly.C
@@ -1239,6 +1240,7 @@ set(VRPN_SERVER_PUBLIC_HEADERS
 	vrpn_Spaceball.h
 	vrpn_Streaming_Arduino.h
 	vrpn_Tng3.h
+	#vrpn_Tracker_Alt.h
 	vrpn_Tracker_3DMouse.h
 	vrpn_Tracker_AnalogFly.h
 	vrpn_Tracker_ButtonFly.h
@@ -1284,10 +1286,19 @@ set(VRPN_SERVER_LIBRARY)
 set(VRPN_CLIENT_LIBRARY)
 
 if(VRPN_BUILD_SERVER_LIBRARY)
+	add_subdirectory(antilatency_integration/)
+	
+	
 	add_library(vrpnserver
 		${VRPN_SERVER_SOURCES}
 		${VRPN_SERVER_PUBLIC_HEADERS})
 	target_link_libraries(vrpnserver ${EXTRA_LIBS} ${SERVER_EXTRA_LIBS})
+	
+	
+	target_link_libraries(vrpnserver PRIVATE antilatency_integration)
+	
+	
+	
 	set(VRPN_CLIENT_LIBRARY vrpnserver)
 	set(VRPN_SERVER_LIBRARY vrpnserver)
 	set_property(TARGET
@@ -1562,4 +1573,11 @@ if(VRPN_INSTALL)
 	cpack_add_component(python DISPLAY_NAME "Python bindings")
 	cpack_add_component(java DISPLAY_NAME "Java bindings")
 	cpack_add_component(doc DISPLAY_NAME "C++ API Documentation")
+endif()
+
+if(WIN32)
+add_custom_command(TARGET vrpnserver POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}\\antilatency_integration\\AntilatencySDK\\Bin\\WindowsDesktop\\x64"
+        ${CMAKE_BINARY_DIR}\\server_src\\$<CONFIG>)
 endif()

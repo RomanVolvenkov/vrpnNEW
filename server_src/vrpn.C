@@ -8,7 +8,7 @@
 #include "vrpn_Configure.h"             // for VRPN_CALLBACK, etc
 #include "vrpn_Connection.h"            // for vrpn_Connection, etc
 #include "vrpn_ForwarderController.h"   // for vrpn_Forwarder_Server
-#include "vrpn_Generic_server_object.h" // for vrpn_Generic_Server_Object
+#include "../antilatency_integration/src/vrpn_AntilatencyAdapter_Generic_Server_Object.h" // for vrpn_Generic_Server_Object
 #include "vrpn_Shared.h"                // for vrpn_SleepMsecs
 
 void Usage(const char *s)
@@ -263,7 +263,7 @@ int main(int argc, char *argv[])
         vrpn_create_server_connection(con_name.str().c_str(), g_inLogName, g_outLogName);
 
     // Create the generic server object and make sure it is doing okay.
-    generic_server = new vrpn_Generic_Server_Object(
+    generic_server = new vrpn_AntilatencyAdapter_Generic_Server_Object(//probably need to be replaced
         connection, config_file_name, verbose, bail_on_error);
     if ((generic_server == NULL) || !generic_server->doing_okay()) {
         fprintf(stderr, "Could not start generic server, exiting\n");

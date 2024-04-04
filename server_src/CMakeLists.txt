@@ -236,6 +236,10 @@ foreach(SOURCE ${SRV_SERVER_SOURCES})
 
 	if(VRPN_INSTALL)
 		install(TARGETS ${APP} RUNTIME DESTINATION bin COMPONENT servers)
+		#message(STATUS "CMAKE_CURRENT_OUTPUT_DIRECTORY: ${CMAKE_CURRENT_BINARY_DIR}")
+		#file(GLOB ANTILATENCY_BINARIES ${CMAKE_SOURCE_DIR}/antilatency_integration/AntilatencySDK/Bin/WindowsDesktop/x64/*.dll)
+		
+		#install(FILES ${ANTILATENCY_BINARIES} DESTINATION bin)
 	endif()
 endforeach()
 

@@ -3,6 +3,9 @@
 
 #include <stdio.h> // for FILE
 
+#include <functional> //for antilatency event execution
+
+
 #include "vrpn_Configure.h" // for VRPN_USE_DEV_INPUT, etc
 #include "vrpn_Types.h"     // for vrpn_float64
 
@@ -15,12 +18,22 @@ class VRPN_API vrpn_TAF_axis;
 class VRPN_API vrpn_IMU_Axis_Params;
 class VRPN_API vrpn_PA_axis;
 
+class VRPN_API vrpn_Connection;
+
 class vrpn_Generic_Server_Object {
 public:
+    // Old Backup version
+    //vrpn_Generic_Server_Object(
+    //    vrpn_Connection *connection_to_use,
+    //    const char *config_file_name = "vrpn.cfg", bool be_verbose = false,
+    //    bool bail_on_open_error = false);
+
     vrpn_Generic_Server_Object(vrpn_Connection *connection_to_use,
                                const char *config_file_name = "vrpn.cfg",
                                bool be_verbose = false,
-                               bool bail_on_open_error = false);
+                               bool bail_on_open_error = false,
+        std::function<int(char *&, char *, FILE *)> setup_antilatencyFunc =
+            [&](char *&, char *, FILE *) -> int { return 1; });
     ~vrpn_Generic_Server_Object();
 
     void mainloop(void);
@@ -48,6 +61,7 @@ protected:
 
     // Functions to parse each kind of device from the configuration file
     // and create a device of that type linked to the appropriate lists.
+	//int setup_Tracker_Alt(char *&pch, char *line, FILE * /*config_file*/); //old backup function
     int setup_raw_SGIBox(char *&pch, char *line, FILE * /*config_file*/);
     int setup_SGIBox(char *&pch, char *line, FILE * /*config_file*/);
     int setup_Tracker_AnalogFly(char *&pch, char *line, FILE *config_file);
